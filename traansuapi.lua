@@ -20,7 +20,7 @@ local function initLibrary(args)
         -- THIS WILL BE MUCH MORE CUSTOMIZABLE
 
         function TRaansuAPI:MakeGUI(args)
-            setmetatable(args,{__index={drag=false, rounded=false, size=2, primaryColor="Color3.fromRGB(255, 255, 255)", secondaryColor="Color3.fromRGB(255, 255, 255)", tertiaryColor="Color3.fromRGB(1, 167, 23)", quarternaryColor="Color3.fromRGB(1, 218, 31)"}})
+            setmetatable(args,{__index={drag=false, rounded=false, size=2, primaryColor=Color3.fromRGB(255, 255, 255), secondaryColor=Color3.fromRGB(255, 255, 255), tertiaryColor=Color3.fromRGB(1, 167, 23), quarternaryColor=Color3.fromRGB(1, 218, 31)}})
 
             local drag, rounded, size, primaryColor, secondaryColor, tertiaryColor, quarternaryColor =
                 args[1] or args.drag,
@@ -40,14 +40,14 @@ local function initLibrary(args)
             end;
 
             if size == 1 then
-                local containerSize = Udim2.new(0, 400, 0, 270);
-                local containerPos = Udim2.new(0.351, 0, 0.342, 0);
+                local containerSize = UDim2.new(0, 400, 0, 270);
+                local containerPos = UDim2.new(0.351, 0, 0.342, 0);
             elseif size == 2 then
-                local containerSize = "Udim2.new(0, 590, 0, 350)";
-                local containerPos = "Udim2.new(0.28, 0, 0.296, 0)";
+                local containerSize = UDim2.new(0, 590, 0, 350);
+                local containerPos = UDim2.new(0.28, 0, 0.296, 0);
             else
-                local containerSize = Udim2.new(0, 840, 0, 480);
-                local containerPos = Udim2.new(0.187, 0, 0.22, 0);
+                local containerSize = UDim2.new(0, 840, 0, 480);
+                local containerPos = UDim2.new(0.187, 0, 0.22, 0);
             end;
 
             local primaryColor = primaryColor or Color3.fromRGB(255, 255, 255); -- Background/Container
@@ -58,7 +58,7 @@ local function initLibrary(args)
 
             -- init ScreenGui. Don't enable while building.
             local gui = Instance.new("ScreenGui");
-            gui.Enabled = false;
+            -- gui.Enabled = false;
             TRaansuAPI.gui = gui;
 
             -- Create container frame
@@ -75,7 +75,7 @@ local function initLibrary(args)
                     Name = "GradientTopBar";
                     BorderSizePixel = 0;
                     Size = gradienttopbarColor; -- MAKE THIS IN SETTINGS
-                    Position = Udim2.new(0, 0, 0, 0);
+                    Position = UDim2.new(0, 0, 0, 0);
                     TRaansuAPI:CreateObj("UIGradient", {
                         Color = gradientColor;
                     });
@@ -85,7 +85,7 @@ local function initLibrary(args)
                 TRaansuAPI:CreateObj("TextLabel", {
                     Name = "Title";
                     BackgroundTransparency = 1.000;
-                    Position = 0.013, 0, 0.056, 0;
+                    Position = UDim2.new(0.013, 0, 0.056, 0);
                     Size = UDim2.new(0, 70, 0 , 24);
                     Text = "TRaansu UI";
                     Font = "JosefinSans";
@@ -103,7 +103,7 @@ local function initLibrary(args)
                     Position = tabbuttoncontainerPos; -- MAKE THIS IN SETTINGS
                     Size = tabbuttoncontainerSize; -- MAKE THIS IN SETTINGS
                     TRaansuAPI:CreateObj("UIListLayout", {
-                        Padding = Udim.new(0,2);
+                        Padding = UDim.new(0,2);
                         FillDirection = "Horizontal";
                         HorizontalAlignment = "Left";
                         SortOrder = "LayoutOrder";
@@ -141,9 +141,9 @@ local function initLibrary(args)
                 -- Contains the actual tabs (I think)
                 TRaansuAPI:CreateObj("Frame", {
                     Name = "ListContainer";
-                    Position = Udim2.new(0.015, 0, 0.245, 0);
+                    Position = UDim2.new(0.015, 0, 0.245, 0);
                     Size = listcontainerSize; -- MAKE THIS IN SETTINGS
-                    TRaansuAPI:Create("UIListLayout", {
+                    TRaansuAPI:CreateObj("UIListLayout", {
                         Padding = UDim.new(0, 2);
                         FillDirection = "Horizontal";
                         HorizontalAlignment = "Left";
@@ -154,7 +154,7 @@ local function initLibrary(args)
             });
 
             -- Search function
-            main.Searchbar.Text.Changed:Connect(function()
+            container.Searchbar.Changed:Connect(function()
                 local search = ContainerFrame.Searchbar.Text:lower();
                 if (search ~= "") then
                     for i,v in next, TRaansuAPI.currentTab:GetChildren() do
@@ -187,6 +187,7 @@ local function initLibrary(args)
                 TRaansuAPI.currentTabObject:Update();
             end);
             print("WHAT AM I DOING WRONG")
+            -- gui.Enabled = true;
         end;
 
 
@@ -211,20 +212,20 @@ local function initLibrary(args)
         function TRaansuAPI:CreateTab(name)
             local TabButtonContainer = gui.ContainerFrame.TabButtonContainer;
             -- Buttons?
-            local tabSelector = TRaansuAPI:Create("ImageButton", {
+            local tabSelector = TRaansuAPI:CreateObj("ImageButton", {
                 Parent = TabButtonContainer;
                 BackgroundTransparency = 1;
-                Size = Udim2.new(0, 60, 1, 0); -- MIGHT NEED TO CHANGE IN SETTINGS
+                Size = UDim2.new(0, 60, 1, 0); -- MIGHT NEED TO CHANGE IN SETTINGS
                 Image = "rbxassetid://4641155773";
                 ImageColor3 = Color3.fromRGB(255, 255, 255);
                 ScaleType = "Slice";
                 SliceCenter = Rect.new(4, 4, 296, 296);
                 SliceScale = 1;
                 Name = "back";
-                TRaansuAPI:Create("UIGradient", {
+                TRaansuAPI:CreateObj("UIGradient", {
                     Color = uiSettings.gradientColor;
                 });
-                TRaansuAPI:Create("TextLabel", {
+                TRaansuAPI:CreateObj("TextLabel", {
                     BackgroundTransparency = 1;
                     Text = name;
                     Size = UDim2.new(1, 0, 1, 0);
@@ -262,7 +263,7 @@ local function initLibrary(args)
 
             -- I think this is just visual?
             function tab:Update()
-                local CanvasSize = Udim2.new(0, 0, 0, 85);
+                local CanvasSize = UDim2.new(0, 0, 0, 85);
                 for i,v in next, TabButtonContainer:GetChildren() do
                     if (not v:IsA("UIListLAyout") and not v:IsA ("UIPadding") and v.Visible) then
                         CanvasSize = CanvasSize + UDim2.new(0, 0, 0, v.AbsoluteSize.Y + 5);
@@ -274,14 +275,14 @@ local function initLibrary(args)
 
             -- Not sure what this is yet......
             function tab:Label(labelName)
-                local holder = TRaansuAPI:Create("Frame", {
+                local holder = TRaansuAPI:CreateObj("Frame", {
                     Name = "Placeholder";
                     Parent = TabButtonContainer;
                     BackgroundColor3 = Color3.fromRGB(25, 25, 25);
                     BorderSizePixel = 0;
-                    Position = Udim2.new(0, 0, 0, 350);
+                    Position = UDim2.new(0, 0, 0, 350);
                     Size = UDim2.new(1, 0, 1, 0);
-                    TRaansuAPI:Create("TextLabel", {
+                    TRaansuAPI:CreateObj("TextLabel", {
                         Name = "label";
                         BackgroundTransparency = 1;
                         Font = "Gotham";
@@ -340,11 +341,6 @@ local function initLibrary(args)
                     Update(input);
                 end;
             end);
-        end;
-
-        -- Function that enables the GUI so it can be seen and interacted with.
-        function TRaansuAPI:Ready()
-            gui.Enabled = true;
         end;
 
     end;

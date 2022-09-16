@@ -128,6 +128,14 @@ local function InitLibrary()
             return tab
         end
 
+
+        local containerSize
+        local containerPos
+        local primaryColor
+        local secondaryColor
+        local tertiaryColor
+        local quarternaryColor
+
         -- Function that controls the input of GUI settings
         -- THIS WILL BE MUCH MORE CUSTOMIZABLE
         function GUISettings(args)
@@ -151,12 +159,12 @@ local function InitLibrary()
                 local containerPos = Udim2.new(0.187, 0, 0.22, 0)
             end
 
-            local args.primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255) -- Background/Container
-            local args.secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255) -- Contained Frames/Search bar
-            local args.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5) -- Accents/gradient 1
-            local args.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
+            local primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255) -- Background/Container
+            local secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255) -- Contained Frames/Search bar
+            local tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5) -- Accents/gradient 1
+            local quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
             local gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)}
-            return
+            return args
         end
 
         -- Function that allows a GUI to be dragged. Applies to all except some objs.

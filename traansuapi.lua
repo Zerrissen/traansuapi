@@ -4,7 +4,7 @@
     GokuSonModz#7555
 ]]
 
-local function initLibrary()
+local function initLibrary(args)
     local TRaansuAPI = {}
     TRaansuAPI.__index = TRaansuAPI -- Uses a metatable to act as a class
 
@@ -31,6 +31,44 @@ local function initLibrary()
             obj.Parent = data.Parent; -- Same thing one is just constantly modified
             return obj;
         end;
+
+
+        local uiSettings = {
+            containerSize;
+            containerPos;
+            primaryColor;
+            secondaryColor;
+            tertiaryColor;
+            quarternaryColor;
+            gradientColor;
+        };
+    
+        if args.drag then
+            TRaansuAPI:Draggable(container);
+        end;
+
+        if args.rounded then
+            print("Something");
+        end;
+
+        arg.size = args.size or 1; -- Default to small, anything other than 1/2 is considered large
+        if args.size == 1 then
+            uiSettings.containerSize = Udim2.new(0, 400, 0, 270);
+            uiSettings.containerPos = Udim2.new(0.351, 0, 0.342, 0);
+        elseif args.size == 2 then
+            uiSettings.containerSize = Udim2.new(0, 590, 0, 350);
+            uiSettings.containerPos = Udim2.new(0.28, 0, 0.296, 0);
+        else
+            uiSettings.containerSize = Udim2.new(0, 840, 0, 480);
+            uiSettings.containerPos = Udim2.new(0.187, 0, 0.22, 0);
+        end;
+
+        uiSettings.primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255); -- Background/Container
+        uiSettings.secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255); -- Contained Frames/Search bar
+        uiSettings.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5); -- Accents/gradient 1
+        uiSettings.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
+        uiSettings.gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)};
+
 
         -- Function that controls the creation of new tabs
         function TRaansuAPI:CreateTab(name)
@@ -128,48 +166,54 @@ local function initLibrary()
             return tab;
         end;
 
-        -- Function that controls the input of GUI settings
-        -- THIS WILL BE MUCH MORE CUSTOMIZABLE
 
         function GUISettings(args)
 
-            local uiSettings = {
-                containerSize;
-                containerPos;
-                primaryColor;
-                secondaryColor;
-                tertiaryColor;
-                quarternaryColor;
-                gradientColor;
-            };
+        end
 
-            if args.drag then
-                TRaansuAPI:Draggable(container);
-            end;
 
-            if args.rounded then
-                print("Something");
-            end;
+        -- Function that controls the input of GUI settings
+        -- THIS WILL BE MUCH MORE CUSTOMIZABLE
 
-            arg.size = args.size or 1; -- Default to small, anything other than 1/2 is considered large
-            if args.size == 1 then
-                uiSettings.containerSize = Udim2.new(0, 400, 0, 270);
-                uiSettings.containerPos = Udim2.new(0.351, 0, 0.342, 0);
-            elseif args.size == 2 then
-                uiSettings.containerSize = Udim2.new(0, 590, 0, 350);
-                uiSettings.containerPos = Udim2.new(0.28, 0, 0.296, 0);
-            else
-                uiSettings.containerSize = Udim2.new(0, 840, 0, 480);
-                uiSettings.containerPos = Udim2.new(0.187, 0, 0.22, 0);
-            end;
+        -- function GUISettings(args)
 
-            uiSettings.primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255); -- Background/Container
-            uiSettings.secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255); -- Contained Frames/Search bar
-            uiSettings.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5); -- Accents/gradient 1
-            uiSettings.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
-            uiSettings.gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)};
-            return uiSettings;
-        end;
+        --     local uiSettings = {
+        --         containerSize;
+        --         containerPos;
+        --         primaryColor;
+        --         secondaryColor;
+        --         tertiaryColor;
+        --         quarternaryColor;
+        --         gradientColor;
+        --     };
+
+        --     if args.drag then
+        --         TRaansuAPI:Draggable(container);
+        --     end;
+
+        --     if args.rounded then
+        --         print("Something");
+        --     end;
+
+        --     arg.size = args.size or 1; -- Default to small, anything other than 1/2 is considered large
+        --     if args.size == 1 then
+        --         uiSettings.containerSize = Udim2.new(0, 400, 0, 270);
+        --         uiSettings.containerPos = Udim2.new(0.351, 0, 0.342, 0);
+        --     elseif args.size == 2 then
+        --         uiSettings.containerSize = Udim2.new(0, 590, 0, 350);
+        --         uiSettings.containerPos = Udim2.new(0.28, 0, 0.296, 0);
+        --     else
+        --         uiSettings.containerSize = Udim2.new(0, 840, 0, 480);
+        --         uiSettings.containerPos = Udim2.new(0.187, 0, 0.22, 0);
+        --     end;
+
+        --     uiSettings.primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255); -- Background/Container
+        --     uiSettings.secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255); -- Contained Frames/Search bar
+        --     uiSettings.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5); -- Accents/gradient 1
+        --     uiSettings.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
+        --     uiSettings.gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)};
+        --     return uiSettings;
+        -- end;
 
         -- Function that allows a GUI to be dragged. Applies to all except some objs.
         function TRaansuAPI:Draggable(container)

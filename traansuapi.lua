@@ -128,20 +128,21 @@ local function InitLibrary()
             return tab
         end
 
-        local uiSettings = {
-            containerSize
-            containerPos
-            primaryColor
-            secondaryColor
-            tertiaryColor
-            quarternaryColor
-            gradientColor
-        }
-
         -- Function that controls the input of GUI settings
         -- THIS WILL BE MUCH MORE CUSTOMIZABLE
 
         function GUISettings(args)
+
+            local uiSettings = {
+                containerSize
+                containerPos
+                primaryColor
+                secondaryColor
+                tertiaryColor
+                quarternaryColor
+                gradientColor
+            }
+
             if args.drag then
                 TRaansuAPI:Draggable(container)
             end
@@ -167,6 +168,7 @@ local function InitLibrary()
             uiSettings.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5) -- Accents/gradient 1
             uiSettings.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
             uiSettings.gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)}
+            return uiSettings
         end
 
         -- Function that allows a GUI to be dragged. Applies to all except some objs.

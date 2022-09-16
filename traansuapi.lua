@@ -4,7 +4,7 @@
     GokuSonModz#7555
 ]]
 
-local function InitLibrary()
+local function initLibrary()
     local TRaansuAPI = {}
     TRaansuAPI.__index = TRaansuAPI -- Uses a metatable to act as a class
 
@@ -151,7 +151,7 @@ local function InitLibrary()
                 print("Something");
             end;
 
-            local arg.size = args.size or 1; -- Default to small, anything other than 1/2 is considered large
+            arg.size = args.size or 1; -- Default to small, anything other than 1/2 is considered large
             if args.size == 1 then
                 uiSettings.containerSize = Udim2.new(0, 400, 0, 270);
                 uiSettings.containerPos = Udim2.new(0.351, 0, 0.342, 0);
@@ -275,7 +275,7 @@ local function InitLibrary()
                 Name = "SearchIcon";
                 BackgroundTransparency = 1.000;
                 Position = UDim2.new(0.014, 0, 0.157, 0);
-                Size = UDim2.new(0, 24, 0, 24);;
+                Size = UDim2.new(0, 24, 0, 24);
                 Image = "http://www.roblox.com/asset/?id=4645651350";
                 BorderSizePixel = 0;
                 TRaansuAPI:CreateObj("UIGradient", {
@@ -302,7 +302,7 @@ local function InitLibrary()
                 Name = "ListContainer";
                 Position = Udim2.new(0.015, 0, 0.245, 0);
                 Size = listcontainerSize; -- MAKE THIS IN SETTINGS
-                TRaansuAPI:Create("UIListLayout",; {
+                TRaansuAPI:Create("UIListLayout", {
                     Padding = UDim.new(0, 2);
                     FillDirection = "Horizontal";
                     HorizontalAlignment = "Left";
@@ -350,4 +350,4 @@ local function InitLibrary()
     return TRaansuAPI;
 end;
 
-return initLibrary();
+--return initLibrary();

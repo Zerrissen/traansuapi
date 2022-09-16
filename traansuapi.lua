@@ -32,44 +32,6 @@ local function initLibrary(args)
             return obj;
         end;
 
-
-        local uiSettings = {
-            containerSize;
-            containerPos;
-            primaryColor;
-            secondaryColor;
-            tertiaryColor;
-            quarternaryColor;
-            gradientColor;
-        };
-    
-        if args.drag then
-            TRaansuAPI:Draggable(container);
-        end;
-
-        if args.rounded then
-            print("Something");
-        end;
-
-        arg.size = args.size or 1; -- Default to small, anything other than 1/2 is considered large
-        if args.size == 1 then
-            uiSettings.containerSize = Udim2.new(0, 400, 0, 270);
-            uiSettings.containerPos = Udim2.new(0.351, 0, 0.342, 0);
-        elseif args.size == 2 then
-            uiSettings.containerSize = Udim2.new(0, 590, 0, 350);
-            uiSettings.containerPos = Udim2.new(0.28, 0, 0.296, 0);
-        else
-            uiSettings.containerSize = Udim2.new(0, 840, 0, 480);
-            uiSettings.containerPos = Udim2.new(0.187, 0, 0.22, 0);
-        end;
-
-        uiSettings.primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255); -- Background/Container
-        uiSettings.secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255); -- Contained Frames/Search bar
-        uiSettings.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5); -- Accents/gradient 1
-        uiSettings.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
-        uiSettings.gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)};
-
-
         -- Function that controls the creation of new tabs
         function TRaansuAPI:CreateTab(name)
             local TabButtonContainer = gui.ContainerFrame.TabButtonContainer;
@@ -166,54 +128,187 @@ local function initLibrary(args)
             return tab;
         end;
 
-
-        function GUISettings(args)
-
-        end
-
-
         -- Function that controls the input of GUI settings
         -- THIS WILL BE MUCH MORE CUSTOMIZABLE
 
-        -- function GUISettings(args)
+        local uiSettings = {
+            containerSize;
+            containerPos;
+            primaryColor;
+            secondaryColor;
+            tertiaryColor;
+            quarternaryColor;
+            gradientColor;
+        };
 
-        --     local uiSettings = {
-        --         containerSize;
-        --         containerPos;
-        --         primaryColor;
-        --         secondaryColor;
-        --         tertiaryColor;
-        --         quarternaryColor;
-        --         gradientColor;
-        --     };
+        function TRaansuAPI:MakeGUI(args)
+            setmetatable(args,{__index={drag=false, rounded=false, size=2, primaryColor="Color3.fromRGB(255, 255, 255)", secondaryColor="Color3.fromRGB(255, 255, 255)", tertiaryColor="Color3.fromRGB(1, 167, 23)", quarternaryColor="Color3.fromRGB(1, 218, 31)"}})
 
-        --     if args.drag then
-        --         TRaansuAPI:Draggable(container);
-        --     end;
+            local drag, rounded, size, primaryColor, secondaryColor, tertiaryColor, quarternaryColor =
+                args[1] or args.drag,
+                args[2] or args.rounded,
+                args[3] or args.size,
+                args[4] or args.primaryColor,
+                args[5] or args.secondaryColor,
+                args[6] or args.tertiaryColor,
+                args[7] or args.quarternaryColor;
 
-        --     if args.rounded then
-        --         print("Something");
-        --     end;
+            if drag then
+                TRaansuAPI:Draggable(container);
+            end;
 
-        --     arg.size = args.size or 1; -- Default to small, anything other than 1/2 is considered large
-        --     if args.size == 1 then
-        --         uiSettings.containerSize = Udim2.new(0, 400, 0, 270);
-        --         uiSettings.containerPos = Udim2.new(0.351, 0, 0.342, 0);
-        --     elseif args.size == 2 then
-        --         uiSettings.containerSize = Udim2.new(0, 590, 0, 350);
-        --         uiSettings.containerPos = Udim2.new(0.28, 0, 0.296, 0);
-        --     else
-        --         uiSettings.containerSize = Udim2.new(0, 840, 0, 480);
-        --         uiSettings.containerPos = Udim2.new(0.187, 0, 0.22, 0);
-        --     end;
+            if rounded then
+                print("Something");
+            end;
 
-        --     uiSettings.primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255); -- Background/Container
-        --     uiSettings.secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255); -- Contained Frames/Search bar
-        --     uiSettings.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5); -- Accents/gradient 1
-        --     uiSettings.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
-        --     uiSettings.gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)};
-        --     return uiSettings;
-        -- end;
+            if size == 1 then
+                uiSettings.containerSize = Udim2.new(0, 400, 0, 270);
+                uiSettings.containerPos = Udim2.new(0.351, 0, 0.342, 0);
+            elseif size == 2 then
+                uiSettings.containerSize = Udim2.new(0, 590, 0, 350);
+                uiSettings.containerPos = Udim2.new(0.28, 0, 0.296, 0);
+            else
+                uiSettings.containerSize = Udim2.new(0, 840, 0, 480);
+                uiSettings.containerPos = Udim2.new(0.187, 0, 0.22, 0);
+            end;
+
+            uiSettings.primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255); -- Background/Container
+            uiSettings.secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255); -- Contained Frames/Search bar
+            uiSettings.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5); -- Accents/gradient 1
+            uiSettings.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
+            uiSettings.gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)};
+
+                -- init ScreenGui. Don't enable while building.
+            local gui = Instance.new("ScreenGui");
+            gui.Enabled = false;
+            TRaansuAPI.gui = gui;
+
+            -- Create container frame
+            local container = TRaansuAPI:CreateObj("Frame", {
+                Name = "ContainerFrame";
+                Parent = gui;
+                Position = uiSettings.containerPos;
+                BorderSizePixel = 0;
+                BackgroundColor3 = uiSettings.primaryColor;
+                Size = uiSettings.containerSize;
+
+                -- Top colored bar, purely aesthetic
+                TRaansuAPI:CreateObj("Frame", {
+                    Name = "GradientTopBar";
+                    BorderSizePixel = 0;
+                    Size = gradienttopbarColor; -- MAKE THIS IN SETTINGS
+                    Position = Udim2.new(0, 0, 0, 0);
+                    TRaansuAPI:Create("UIGradient", {
+                        Color = uiSettings.gradientColor;
+                    });
+                });
+
+                -- Title of GUI. Position won't change (unless I add this in settings)
+                TRaansuAPI:CreateObj("TextLabel", {
+                    Name = "Title";
+                    BackgroundTransparency = 1.000;
+                    Position = 0.013, 0, 0.056, 0;
+                    Size = UDim2.new(0, 70, 0 , 24);
+                    Text = "TRaansu UI";
+                    Font = "JosefinSans";
+                    TextSize = 14;
+                    TRaansuAPI:Create("UIGradient", {
+                        Color = uiSettings.gradientColor;
+                    });
+                });
+
+                -- I believe this is a frame that sits next to the title for tab buttons.
+                TRaansuAPI:CreateObj("Frame",{
+                    Name = "TabButtonContainer";
+                    BackgroundTransparency = 1;
+                    BorderSizePixel = 0;
+                    Position = tabbuttoncontainerPos; -- MAKE THIS IN SETTINGS
+                    Size = tabbuttoncontainerSize; -- MAKE THIS IN SETTINGS
+                    TRaansuAPI:Create("UIListLayout", {
+                        Padding = Udim.new(0,2);
+                        FillDirection = "Horizontal";
+                        HorizontalAlignment = "Left";
+                        SortOrder = "LayoutOrder";
+                        VerticalAlignment = "Top";
+                    });
+                });
+
+                -- Search icon, sits next to search bar
+                TRaansuAPI:CreateObj("ImageLabel", {
+                    Name = "SearchIcon";
+                    BackgroundTransparency = 1.000;
+                    Position = UDim2.new(0.014, 0, 0.157, 0);
+                    Size = UDim2.new(0, 24, 0, 24);
+                    Image = "http://www.roblox.com/asset/?id=4645651350";
+                    BorderSizePixel = 0;
+                    TRaansuAPI:CreateObj("UIGradient", {
+                        Color = uiSettings.gradientColor;
+                        Rotation = 45;
+                    });
+                });
+
+                -- Search bar, used to search for buttons
+                TRaansuAPI:CreateObj("TextBox", {
+                    Name = "Searchbar";
+                    BackgroundTransparency = 1.000;
+                    Position = UDim2.new(0.043, 0, 0.157, 0);
+                    Size = searchbarSize; -- MAKE THIS IN SETTINGS
+                    Font = Enum.Font.Gotham;
+                    BorderSizePixel = 0;
+                    PlaceholderText = "Enter function to search";
+                    Text = "";
+                    TextSize = 14;
+                });
+
+                -- Contains the actual tabs (I think)
+                TRaansuAPI:Create("Frame", {
+                    Name = "ListContainer";
+                    Position = Udim2.new(0.015, 0, 0.245, 0);
+                    Size = listcontainerSize; -- MAKE THIS IN SETTINGS
+                    TRaansuAPI:Create("UIListLayout", {
+                        Padding = UDim.new(0, 2);
+                        FillDirection = "Horizontal";
+                        HorizontalAlignment = "Left";
+                        SortOrder = "LayoutOrder";
+                        VerticalAlignment = "Top";
+                    });
+                });
+            });
+
+            -- Search function
+            main.Searchbar.Text.Changed:Connect(function()
+                local search = ContainerFrame.Searchbar.Text:lower();
+                if (search ~= "") then
+                    for i,v in next, TRaansuAPI.currentTab:GetChildren() do
+                        if (not v:IsA("UIPadding") and not v:IsA("UIListLayout")) then
+                            local label = v:FindFirstChild("label");
+                            local button = v:FindFirstChild("button");
+                            local find;
+                            if (label and label.Text:gsub("%s", ""):lower():sub(1, #search)) then
+                                v.Visible = true;
+                                find = true;
+                            end;
+
+                            if (button and button:FindFirstChild("label") and button.label.Text:gsub("%s", ""):lower():sub(1, #search) == search) then
+                                v.Visible = true;
+                                find = true;
+                            end;
+
+                            if (not find) then
+                                v.Visible = false;
+                            end;
+                        end;
+                    end;
+                elseif TRaansuAPI.currentTab then
+                    for i,v in next, TRaansuAPI.currentTab:GetChildren() do
+                        if(not v:IsA("UIPadding") and not v:IsA("UIListLayout")) then
+                            v.Visible = true;
+                        end;
+                    end;
+                end;
+                TRaansuAPI.currentTabObject:Update();
+            end);
+        end;
 
         -- Function that allows a GUI to be dragged. Applies to all except some objs.
         function TRaansuAPI:Draggable(container)
@@ -258,137 +353,6 @@ local function initLibrary(args)
         function TRaansuAPI:Ready()
             gui.Enabled = true;
         end;
-
-        -- init ScreenGui. Don't enable while building.
-        local gui = Instance.new("ScreenGui");
-        gui.Enabled = false;
-        TRaansuAPI.gui = gui;
-
-        -- Create container frame
-        local container = TRaansuAPI:CreateObj("Frame", {
-            Name = "ContainerFrame";
-            Parent = gui;
-            Position = uiSettings.containerPos;
-            BorderSizePixel = 0;
-            BackgroundColor3 = uiSettings.primaryColor;
-            Size = uiSettings.containerSize;
-
-            -- Top colored bar, purely aesthetic
-            TRaansuAPI:CreateObj("Frame", {
-                Name = "GradientTopBar";
-                BorderSizePixel = 0;
-                Size = gradienttopbarColor; -- MAKE THIS IN SETTINGS
-                Position = Udim2.new(0, 0, 0, 0);
-                TRaansuAPI:Create("UIGradient", {
-                    Color = uiSettings.gradientColor;
-                });
-            });
-
-            -- Title of GUI. Position won't change (unless I add this in settings)
-            TRaansuAPI:CreateObj("TextLabel", {
-                Name = "Title";
-                BackgroundTransparency = 1.000;
-                Position = 0.013, 0, 0.056, 0;
-                Size = UDim2.new(0, 70, 0 , 24);
-                Text = "TRaansu UI";
-                Font = "JosefinSans";
-                TextSize = 14;
-                TRaansuAPI:Create("UIGradient", {
-                    Color = uiSettings.gradientColor;
-                });
-            });
-
-            -- I believe this is a frame that sits next to the title for tab buttons.
-            TRaansuAPI:CreateObj("Frame",{
-                Name = "TabButtonContainer";
-                BackgroundTransparency = 1;
-                BorderSizePixel = 0;
-                Position = tabbuttoncontainerPos; -- MAKE THIS IN SETTINGS
-                Size = tabbuttoncontainerSize; -- MAKE THIS IN SETTINGS
-                TRaansuAPI:Create("UIListLayout", {
-                    Padding = Udim.new(0,2);
-                    FillDirection = "Horizontal";
-                    HorizontalAlignment = "Left";
-                    SortOrder = "LayoutOrder";
-                    VerticalAlignment = "Top";
-                });
-            });
-
-            -- Search icon, sits next to search bar
-            TRaansuAPI:CreateObj("ImageLabel", {
-                Name = "SearchIcon";
-                BackgroundTransparency = 1.000;
-                Position = UDim2.new(0.014, 0, 0.157, 0);
-                Size = UDim2.new(0, 24, 0, 24);
-                Image = "http://www.roblox.com/asset/?id=4645651350";
-                BorderSizePixel = 0;
-                TRaansuAPI:CreateObj("UIGradient", {
-                    Color = uiSettings.gradientColor;
-                    Rotation = 45;
-                });
-            });
-
-            -- Search bar, used to search for buttons
-            TRaansuAPI:CreateObj("TextBox", {
-                Name = "Searchbar";
-                BackgroundTransparency = 1.000;
-                Position = UDim2.new(0.043, 0, 0.157, 0);
-                Size = searchbarSize; -- MAKE THIS IN SETTINGS
-                Font = Enum.Font.Gotham;
-                BorderSizePixel = 0;
-                PlaceholderText = "Enter function to search";
-                Text = "";
-                TextSize = 14;
-            });
-
-            -- Contains the actual tabs (I think)
-            TRaansuAPI:Create("Frame", {
-                Name = "ListContainer";
-                Position = Udim2.new(0.015, 0, 0.245, 0);
-                Size = listcontainerSize; -- MAKE THIS IN SETTINGS
-                TRaansuAPI:Create("UIListLayout", {
-                    Padding = UDim.new(0, 2);
-                    FillDirection = "Horizontal";
-                    HorizontalAlignment = "Left";
-                    SortOrder = "LayoutOrder";
-                    VerticalAlignment = "Top";
-                });
-            });
-        });
-
-        -- Search function
-        main.Searchbar.Text.Changed:Connect(function()
-            local search = ContainerFrame.Searchbar.Text:lower();
-            if (search ~= "") then
-                for i,v in next, TRaansuAPI.currentTab:GetChildren() do
-                    if (not v:IsA("UIPadding") and not v:IsA("UIListLayout")) then
-                        local label = v:FindFirstChild("label");
-                        local button = v:FindFirstChild("button");
-                        local find;
-                        if (label and label.Text:gsub("%s", ""):lower():sub(1, #search)) then
-                            v.Visible = true;
-                            find = true;
-                        end;
-
-                        if (button and button:FindFirstChild("label") and button.label.Text:gsub("%s", ""):lower():sub(1, #search) == search) then
-                            v.Visible = true;
-                            find = true;
-                        end;
-
-                        if (not find) then
-                            v.Visible = false;
-                        end;
-                    end;
-                end;
-            elseif TRaansuAPI.currentTab then
-                for i,v in next, TRaansuAPI.currentTab:GetChildren() do
-                    if(not v:IsA("UIPadding") and not v:IsA("UIListLayout")) then
-                        v.Visible = true;
-                    end;
-                end;
-            end;
-            TRaansuAPI.currentTabObject:Update();
-        end);
 
     end;
     return TRaansuAPI;

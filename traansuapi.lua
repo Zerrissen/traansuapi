@@ -156,6 +156,7 @@ local function InitLibrary()
             local args.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5) -- Accents/gradient 1
             local args.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
             local gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)}
+            return GUISettings
         end
 
         -- Function that allows a GUI to be dragged. Applies to all except some objs.

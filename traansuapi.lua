@@ -58,6 +58,7 @@ local function initLibrary(args)
 
             -- init ScreenGui. Don't enable while building.
             local gui = Instance.new("ScreenGui");
+            gui.Name = "gui"
             -- gui.Enabled = false;
             TRaansuAPI.gui = gui;
 
@@ -188,6 +189,7 @@ local function initLibrary(args)
             end);
             print("WHAT AM I DOING WRONG")
             -- gui.Enabled = true;
+            container.Visible = true;
         end;
 
 

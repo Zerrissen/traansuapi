@@ -308,7 +308,7 @@ local function initLibrary(args)
                 end;
                 TRaansuAPI.currentTabObject:Update();
             end);
-            return
+            print("WHAT AM I DOING WRONG")
         end;
 
         -- Function that allows a GUI to be dragged. Applies to all except some objs.

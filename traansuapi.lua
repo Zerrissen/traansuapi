@@ -47,7 +47,7 @@ local function InitLibrary()
                 SliceScale = 1;
                 Name = "back";
                 library:Create("UIGradient", {
-                    Color = gradientColor
+                    Color = uiSettings.gradientColor
                 })
                 library:Create("TextLabel", {
                     BackgroundTransparency = 1
@@ -128,16 +128,19 @@ local function InitLibrary()
             return tab
         end
 
-
-        local containerSize
-        local containerPos
-        local primaryColor
-        local secondaryColor
-        local tertiaryColor
-        local quarternaryColor
+        local uiSettings = {
+            containerSize
+            containerPos
+            primaryColor
+            secondaryColor
+            tertiaryColor
+            quarternaryColor
+            gradientColor
+        }
 
         -- Function that controls the input of GUI settings
         -- THIS WILL BE MUCH MORE CUSTOMIZABLE
+
         function GUISettings(args)
             if args.drag then
                 TRaansuAPI:Draggable(container)
@@ -149,22 +152,21 @@ local function InitLibrary()
 
             local arg.size = args.size or 1 -- Default to small, anything other than 1/2 is considered large
             if args.size == 1 then
-                local containerSize = Udim2.new(0, 400, 0, 270)
-                local containerPos = Udim2.new(0.351, 0, 0.342, 0)
+                uiSettings.containerSize = Udim2.new(0, 400, 0, 270)
+                uiSettings.containerPos = Udim2.new(0.351, 0, 0.342, 0)
             elseif args.size == 2 then
-                local containerSize = Udim2.new(0, 590, 0, 350)
-                local containerPos = Udim2.new(0.28, 0, 0.296, 0)
+                uiSettings.containerSize = Udim2.new(0, 590, 0, 350)
+                uiSettings.containerPos = Udim2.new(0.28, 0, 0.296, 0)
             else
-                local containerSize = Udim2.new(0, 840, 0, 480)
-                local containerPos = Udim2.new(0.187, 0, 0.22, 0)
+                uiSettings.containerSize = Udim2.new(0, 840, 0, 480)
+                uiSettings.containerPos = Udim2.new(0.187, 0, 0.22, 0)
             end
 
-            local primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255) -- Background/Container
-            local secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255) -- Contained Frames/Search bar
-            local tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5) -- Accents/gradient 1
-            local quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
-            local gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)}
-            return args
+            uiSettings.primaryColor = args.primaryColor or Color3.fromRGB(255, 255, 255) -- Background/Container
+            uiSettings.secondaryColor = args.secondaryColor or Color3.fromRGB(255, 255, 255) -- Contained Frames/Search bar
+            uiSettings.tertiaryColor = args.tertiaryColor or Color3.fromRGB(187, 0, 5) -- Accents/gradient 1
+            uiSettings.quarternaryColor = args.quarternaryColor -- Gradient 2. Leave blank for no gradients
+            uiSettings.gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)}
         end
 
         -- Function that allows a GUI to be dragged. Applies to all except some objs.
@@ -220,10 +222,10 @@ local function InitLibrary()
         local container = TRaansuAPI:CreateObj("Frame", {
             Name = "ContainerFrame"
             Parent = gui
-            Position = containerPos
+            Position = uiSettings.containerPos
             BorderSizePixel = 0
-            BackgroundColor3 = primaryColor
-            Size = containerSize
+            BackgroundColor3 = uiSettings.primaryColor
+            Size = uiSettings.containerSize
 
             -- Top colored bar, purely aesthetic
             TRaansuAPI:CreateObj("Frame", {
@@ -232,7 +234,7 @@ local function InitLibrary()
                 Size = gradienttopbarColor -- MAKE THIS IN SETTINGS
                 Position = Udim2.new(0, 0, 0, 0)
                 TRaansuAPI:Create("UIGradient", {
-                    Color = gradientColor
+                    Color = uiSettings.gradientColor
                 })
             })
 
@@ -246,7 +248,7 @@ local function InitLibrary()
                 Font = "JosefinSans"
                 TextSize = 14
                 TRaansuAPI:Create("UIGradient", {
-                    Color = gradientColor
+                    Color = uiSettings.gradientColor
                 })
             })
 
@@ -275,7 +277,7 @@ local function InitLibrary()
                 Image = "http://www.roblox.com/asset/?id=4645651350";
                 BorderSizePixel = 0
                 TRaansuAPI:CreateObj("UIGradient", {
-                    Color = gradientColor
+                    Color = uiSettings.gradientColor
                     Rotation = 45
                 })
             })

@@ -20,6 +20,7 @@ local function initLibrary(args)
         -- THIS WILL BE MUCH MORE CUSTOMIZABLE
 
         function TRaansuAPI:MakeGUI(args)
+            print("Starting MakeGUI")
             setmetatable(args,{__index={drag=false, rounded=false, size=2, primaryColor=Color3.fromRGB(255, 255, 255), secondaryColor=Color3.fromRGB(255, 255, 255), tertiaryColor=Color3.fromRGB(1, 167, 23), quarternaryColor=Color3.fromRGB(1, 218, 31)}})
 
             local drag, rounded, size, primaryColor, secondaryColor, tertiaryColor, quarternaryColor =
@@ -36,7 +37,7 @@ local function initLibrary(args)
             end;
 
             if rounded then
-                print("Something");
+                print("Rounded thing dw yet");
             end;
 
             if size == 1 then
@@ -56,12 +57,14 @@ local function initLibrary(args)
             local quarternaryColor = quarternaryColor -- Gradient 2. Leave blank for no gradients
             local gradientColor = ColorSequence.new{ColorSequenceKeypoint.new(0, tertiaryColor), ColorSequenceKeypoint.new(1, quarternaryColor)};
 
+            print("MakeGUI - Init ScreenGui")
             -- init ScreenGui. Don't enable while building.
             local gui = Instance.new("ScreenGui");
             gui.Name = "gui"
             -- gui.Enabled = false;
             TRaansuAPI.gui = gui;
 
+            print("MakeGUI - ContainerFrame")
             -- Create container frame
             local container = TRaansuAPI:CreateObj("Frame", {
                 Name = "ContainerFrame";
@@ -71,6 +74,7 @@ local function initLibrary(args)
                 BackgroundColor3 = primaryColor;
                 Size = containerSize;
 
+                print("MakeGUI - GradientTopBar")
                 -- Top colored bar, purely aesthetic
                 TRaansuAPI:CreateObj("Frame", {
                     Name = "GradientTopBar";
@@ -82,6 +86,7 @@ local function initLibrary(args)
                     });
                 });
 
+                print("MakeGUI - Title")
                 -- Title of GUI. Position won't change (unless I add this in settings)
                 TRaansuAPI:CreateObj("TextLabel", {
                     Name = "Title";
@@ -96,6 +101,7 @@ local function initLibrary(args)
                     });
                 });
 
+                print("MakeGUI - TabButtonContainer")
                 -- I believe this is a frame that sits next to the title for tab buttons.
                 TRaansuAPI:CreateObj("Frame",{
                     Name = "TabButtonContainer";
@@ -112,6 +118,7 @@ local function initLibrary(args)
                     });
                 });
 
+                print("MakeGUI - SearchIcon")
                 -- Search icon, sits next to search bar
                 TRaansuAPI:CreateObj("ImageLabel", {
                     Name = "SearchIcon";
@@ -126,6 +133,7 @@ local function initLibrary(args)
                     });
                 });
 
+                print("MakeGUI - Searchbar")
                 -- Search bar, used to search for buttons
                 TRaansuAPI:CreateObj("TextBox", {
                     Name = "Searchbar";
@@ -139,6 +147,7 @@ local function initLibrary(args)
                     TextSize = 14;
                 });
 
+                print("MakeGUI - ListContainer")
                 -- Contains the actual tabs (I think)
                 TRaansuAPI:CreateObj("Frame", {
                     Name = "ListContainer";
@@ -154,6 +163,7 @@ local function initLibrary(args)
                 });
             });
 
+            print("MakeGUI - Search function")
             -- Search function
             container.Searchbar.Changed:Connect(function()
                 local search = ContainerFrame.Searchbar.Text:lower();
@@ -187,13 +197,15 @@ local function initLibrary(args)
                 end;
                 TRaansuAPI.currentTabObject:Update();
             end);
-            print("WHAT AM I DOING WRONG")
-            -- gui.Enabled = true;
+            print("MakeGUI - container Visible/ gui Enabled")
+            gui.Enabled = true;
             container.Visible = true;
+
+            print("Ending MakeGUI")
         end;
 
 
-
+        print("Starting CreatObj")
         -- Function that controls the creation of new GUI children
         function TRaansuAPI:CreateObj(class, data)
             local obj = Instance.new(class);
@@ -208,12 +220,15 @@ local function initLibrary(args)
             end;
             obj.Parent = data.Parent; -- Same thing one is just constantly modified
             return obj;
+            print("Ending CreateObj")
         end;
 
+        print("Starting CreateTab")
         -- Function that controls the creation of new tabs
         function TRaansuAPI:CreateTab(name)
             local TabButtonContainer = gui.ContainerFrame.TabButtonContainer;
             -- Buttons?
+            print("CreateTab - 1st ImageButton")
             local tabSelector = TRaansuAPI:CreateObj("ImageButton", {
                 Parent = TabButtonContainer;
                 BackgroundTransparency = 1;
@@ -235,6 +250,7 @@ local function initLibrary(args)
                 });
             });
 
+            print("CreateTab - Tab settings")
             -- Check if button was pushed, if so then change its color and change tab
             local tab = {};
             TabButtonContainer.ChildAdded:Connect(function(Obj)
@@ -264,6 +280,7 @@ local function initLibrary(args)
             end);
 
             -- I think this is just visual?
+            print("CreateTab - Update function")
             function tab:Update()
                 local CanvasSize = UDim2.new(0, 0, 0, 85);
                 for i,v in next, TabButtonContainer:GetChildren() do
@@ -275,6 +292,7 @@ local function initLibrary(args)
                 TRaansuAPI:Tween(TabButtonContainer, {time = 0.1, CanvasSize = CanvasSize});
             end;
 
+            print("CreateTab - tab Label function - Placeholder")
             -- Not sure what this is yet......
             function tab:Label(labelName)
                 local holder = TRaansuAPI:CreateObj("Frame", {
@@ -295,6 +313,7 @@ local function initLibrary(args)
                 });
             end;
 
+            print("CreateTab - tab Toggle function")
             -- Toggle the buttons function???
             function tab:Toggle(toggleName, callback)
                 local callback = callback or function() end;
@@ -304,10 +323,12 @@ local function initLibrary(args)
 
             end;
             return tab;
+            print("Ending CreateTab")
         end;
 
         -- Function that allows a GUI to be dragged. Applies to all except some objs.
         function TRaansuAPI:Draggable(container)
+            print("Starting Draggable")
             local dragging;
             local dragInput;
             local dragStart;
@@ -343,9 +364,11 @@ local function initLibrary(args)
                     Update(input);
                 end;
             end);
+            print("Ending Draggable")
         end;
 
     end;
+    print("Returning API")
     return TRaansuAPI;
 end;
 
